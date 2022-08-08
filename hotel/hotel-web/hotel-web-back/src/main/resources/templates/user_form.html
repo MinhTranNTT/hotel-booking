@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
-        <title>Datatables | Adminto - Responsive Admin Dashboard Template</title>
+        <title>Validation | Parsley | Adminto - Responsive Admin Dashboard Template</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -10,19 +10,12 @@
         <!-- App favicon -->
         <link rel="shortcut icon" href="assets/images/favicon.ico">
 
-        <!-- third party css -->
-        <link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-        <!-- third party css end -->
-
 		<!-- App css -->
 
-		<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+		<link th:href="@{/assets/css/app.min.css}" rel="stylesheet" type="text/css" id="app-style" />
 
 		<!-- icons -->
-		<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+		<link th:href="@{/assets/css/icons.min.css}" rel="stylesheet" type="text/css" />
 
     </head>
 
@@ -31,7 +24,7 @@
 
         <!-- Begin page -->
         <div id="wrapper">
-            
+
             <!-- Topbar Start -->
             <div class="navbar-custom">
                     <ul class="list-unstyled topnav-menu float-end mb-0">
@@ -277,7 +270,7 @@
                         </li>
     
                         <li>
-                            <h4 class="page-title-main">Datatables</h4>
+                            <h4 class="page-title-main">Validation</h4>
                         </li>
             
                     </ul>
@@ -362,6 +355,13 @@
                             <li class="menu-title mt-2">Apps</li>
 
                             <li>
+                                <a href="apps-calendar.html">
+                                    <i class="mdi mdi-calendar-blank-outline"></i>
+                                    <span> Calendar </span>
+                                </a>
+                            </li>
+
+                            <li>
                                 <a href="apps-chat.html">
                                     <i class="mdi mdi-forum-outline"></i>
                                     <span> Chat </span>
@@ -371,16 +371,16 @@
                             <li>
                                 <a href="#email" data-bs-toggle="collapse">
                                     <i class="mdi mdi-email-outline"></i>
-                                    <span> User </span>
+                                    <span> Email </span>
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <div class="collapse" id="email">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a th:href="@{/users}">User List</a>
+                                            <a href="email-inbox.html">Inbox</a>
                                         </li>
                                         <li>
-                                            <a th:href="@{/users/new}">Create New User</a>
+                                            <a href="email-templates.html">Email Templates</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -838,49 +838,87 @@
 
                     <!-- Start Content-->
                     <div class="container-fluid">
-
                         <div class="row">
-                            <div class="col-12">
+
+                            <div class="col-lg-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="mt-0 header-title">KeyTable example</h4>
-                                        <p class="text-muted font-14 mb-3">
-                                            KeyTable provides Excel like cell navigation on any table. Events (focus, blur, action etc) can be assigned to individual cells, columns, rows or all cells.
+                                        <h4 class="header-title">Horizontal Form</h4>
+                                        <p class="text-muted font-14">
+                                            Parsley is a javascript form validation library. It helps you provide your users with feedback on their form submission before sending it to your server.
                                         </p>
-    
-                                        <table id="key-table" class="table table-bordered dt-responsive nowrap">
-                                            <thead>
-                                            <tr>
-                                                <th>Id</th>
-                                                <th>Photo</th>
-                                                <th>Email</th>
-                                                <th>Enabled</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Roles</th>
-                                            </tr>
-                                            </thead>
-    
-    
-                                            <tbody th:each="user : ${listUser}">
-                                            <tr>
-                                                <td>[[${user.id}]]</td>
-                                                <td></td>
-                                                <td>[[${user.email}]]</td>
-                                                <td>[[${user.enabled}]]</td>
-                                                <td>[[${user.firstName}]]</td>
-                                                <td>[[${user.lastName}]]</td>
-                                                <td>[[${user.roles}]]</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+
+                                        <form role="form" th:object="${user}" th:action="@{/users/save}" method="post" class="parsley-examples">
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-4 col-form-label">Email<span class="text-danger">*</span></label>
+                                                <div class="col-7">
+                                                    <input type="email" th:field="*{email}" required parsley-type="email" class="form-control" id="inputEmail3" placeholder="Email" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-4 col-form-label">First Name<span class="text-danger">*</span></label>
+                                                <div class="col-7">
+                                                    <input required th:field="*{firstName}" class="form-control" id="validationCustom01" placeholder="First name" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="inputEmail3" class="col-4 col-form-label">Last Name<span class="text-danger">*</span></label>
+                                                <div class="col-7">
+                                                    <input required th:field="*{lastName}" class="form-control" id="validationCustom01" placeholder="Last name" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="hori-pass1" class="col-4 col-form-label">Password<span class="text-danger">*</span></label>
+                                                <div class="col-7">
+                                                    <input id="hori-pass1" th:field="*{password}" type="password" placeholder="Password" required class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="hori-pass2" class="col-4 col-form-label">Confirm Password <span class="text-danger">*</span></label>
+                                                <div class="col-7">
+                                                    <input data-parsley-equalto="#hori-pass1" type="password" required placeholder="Password" class="form-control" id="hori-pass2" />
+                                                </div>
+                                            </div>
+                                        	<div class="row mb-3">
+                                                <label for="inputEmail3" class="col-4 col-form-label">Roles<span class="text-danger">*</span></label>
+                                                <div class="col-7">
+                                                    <div class="form-check  mb-1">
+														<th:block th:each="role : ${listRoles}">
+															<input type="checkbox" class="form-check-input" th:value="${role.id}" th:field="*{roles}" />
+															<p> [[${role.name}]] <label class="form-check-label"> - [[${role.description}]] </label></p>
+														</th:block>
+													</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="webSite" class="col-4 col-form-label">Web Site<span class="text-danger">*</span></label>
+                                                <div class="col-7">
+                                                    <input type="url" required parsley-type="url" class="form-control" id="webSite" placeholder="URL" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-8 offset-4">
+                                                    <div class="form-check ">
+                                                        <input id="checkbox6" type="checkbox" class="form-check-input"/>
+                                                        <label for="checkbox6"class="form-check-label">Remember me</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-8 offset-4">
+                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
+                                                    <button type="reset" class="btn btn-secondary waves-effect">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                </div>
-                               
-                            </div>
-                        </div> <!-- end row -->
-                        
-                    </div> <!-- container-fluid -->
+                                </div> <!-- end card -->
+
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                    </div> <!-- container -->
 
                 </div> <!-- content -->
 
@@ -1059,35 +1097,22 @@
         <div class="rightbar-overlay"></div>
 
         <!-- Vendor -->
-        <script src="assets/libs/jquery/jquery.min.js"></script>
-        <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/libs/simplebar/simplebar.min.js"></script>
-        <script src="assets/libs/node-waves/waves.min.js"></script>
-        <script src="assets/libs/waypoints/lib/jquery.waypoints.min.js"></script>
-        <script src="assets/libs/jquery.counterup/jquery.counterup.min.js"></script>
-        <script src="assets/libs/feather-icons/feather.min.js"></script>
+        <script th:src="@{/assets/libs/jquery/jquery.min.js}"></script>
+        <script th:src="@{/assets/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/assets/libs/simplebar/simplebar.min.js}"></script>
+        <script th:src="@{/assets/libs/node-waves/waves.min.js}"></script>
+        <script th:src="@{/assets/libs/waypoints/lib/jquery.waypoints.min.js}"></script>
+        <script th:src="@{/assets/libs/jquery.counterup/jquery.counterup.min.js}"></script>
+        <script th:src="@{/assets/libs/feather-icons/feather.min.js}"></script>
 
-        <!-- third party js -->
-        <script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-        <script src="assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-        <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-        <script src="assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
-        <script src="assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-        <script src="assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
-        <script src="assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
-        <script src="assets/libs/datatables.net-buttons/js/buttons.flash.min.js"></script>
-        <script src="assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
-        <script src="assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-        <script src="assets/libs/datatables.net-select/js/dataTables.select.min.js"></script>
-        <script src="assets/libs/pdfmake/build/pdfmake.min.js"></script>
-        <script src="assets/libs/pdfmake/build/vfs_fonts.js"></script>
-        <!-- third party js ends -->
+        <!-- Plugin js-->
+        <script th:src="@{/assets/libs/parsleyjs/parsley.min.js}"></script>
 
-        <!-- Datatables init -->
-        <script src="assets/js/pages/datatables.init.js"></script>
+        <!-- Validation init js-->
+        <script th:src="@{/assets/js/pages/form-validation.init.js}"></script>
 
         <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
+        <script th:src="@{/assets/js/app.min.js}"></script>
         
     </body>
 </html>
