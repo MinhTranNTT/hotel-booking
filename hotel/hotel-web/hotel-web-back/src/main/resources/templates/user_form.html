@@ -839,7 +839,6 @@
                     <!-- Start Content-->
                     <div class="container-fluid">
                         <div class="row">
-
                             <div class="col-lg-6">
                                 <div class="card">
                                     <div class="card-body">
@@ -847,8 +846,10 @@
                                         <p class="text-muted font-14">
                                             Parsley is a javascript form validation library. It helps you provide your users with feedback on their form submission before sending it to your server.
                                         </p>
-
-                                        <form role="form" th:object="${user}" th:action="@{/users/save}" method="post" class="parsley-examples">
+										
+                                        <form role="form" th:object="${user}" th:action="@{/users/save}" method="post" class="parsley-examples"
+                                        		onsubmit="return checkEmailUnique(this);"
+                                        >
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-4 col-form-label">Email<span class="text-danger">*</span></label>
                                                 <div class="col-7">
@@ -907,7 +908,7 @@
                                             <div class="row mb-3">
                                                 <div class="col-8 offset-4">
                                                     <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
-                                                    <button type="reset" class="btn btn-secondary waves-effect">Cancel</button>
+                                                    <button type="reset" id="buttonCancel" class="btn btn-secondary waves-effect">Cancel</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -1113,6 +1114,8 @@
 
         <!-- App js -->
         <script th:src="@{/assets/js/app.min.js}"></script>
+        
+         <script th:src="@{/assets/js/custom/users/user_form.js}"></script>
         
     </body>
 </html>
