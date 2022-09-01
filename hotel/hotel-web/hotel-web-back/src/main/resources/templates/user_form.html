@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
-        <title>Validation | Parsley | Adminto - Responsive Admin Dashboard Template</title>
+        <title>Create User</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -847,9 +847,8 @@
                                             Parsley is a javascript form validation library. It helps you provide your users with feedback on their form submission before sending it to your server.
                                         </p>
 										
-                                        <form role="form" th:object="${user}" th:action="@{/users/save}" method="post" class="parsley-examples"
-                                        		onsubmit="return checkEmailUnique(this);"
-                                        >
+                                        <form th:action="@{/users/save}" method="post" role="form" th:object="${user}" class="parsley-examples"
+                                        		onsubmit="return checkEmailUnique(this);" >
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-4 col-form-label">Email<span class="text-danger">*</span></label>
                                                 <div class="col-7">
@@ -865,7 +864,7 @@
                                             <div class="row mb-3">
                                                 <label for="inputEmail3" class="col-4 col-form-label">Last Name<span class="text-danger">*</span></label>
                                                 <div class="col-7">
-                                                    <input required th:field="*{lastName}" class="form-control" id="validationCustom01" placeholder="Last name" />
+                                                    <input required th:field="*{lastName}" class="form-control" id="validationCustom02" placeholder="Last name" />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -889,12 +888,6 @@
 															<p> [[${role.name}]] <label class="form-check-label"> - [[${role.description}]] </label></p>
 														</th:block>
 													</div>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <label for="webSite" class="col-4 col-form-label">Web Site<span class="text-danger">*</span></label>
-                                                <div class="col-7">
-                                                    <input type="url" required parsley-type="url" class="form-control" id="webSite" placeholder="URL" />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -1100,22 +1093,22 @@
         <!-- Vendor -->
         <script th:src="@{/assets/libs/jquery/jquery.min.js}"></script>
         <script th:src="@{/assets/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
-        <script th:src="@{/assets/libs/simplebar/simplebar.min.js}"></script>
+        <!--<script th:src="@{/assets/libs/simplebar/simplebar.min.js}"></script>
         <script th:src="@{/assets/libs/node-waves/waves.min.js}"></script>
-        <script th:src="@{/assets/libs/waypoints/lib/jquery.waypoints.min.js}"></script>
+        <script th:src="@{/assets/libs/waypoints/lib/jquery.waypoints.min.js}"></script>-->
         <script th:src="@{/assets/libs/jquery.counterup/jquery.counterup.min.js}"></script>
-        <script th:src="@{/assets/libs/feather-icons/feather.min.js}"></script>
+        <!--<script th:src="@{/assets/libs/feather-icons/feather.min.js}"></script>-->
 
         <!-- Plugin js-->
-        <script th:src="@{/assets/libs/parsleyjs/parsley.min.js}"></script>
+        <!--<script th:src="@{/assets/libs/parsleyjs/parsley.min.js}"></script>-->
 
         <!-- Validation init js-->
-        <script th:src="@{/assets/js/pages/form-validation.init.js}"></script>
+       <!-- <script th:src="@{/assets/js/pages/form-validation.init.js}"></script>-->
 
         <!-- App js -->
         <script th:src="@{/assets/js/app.min.js}"></script>
         
-         <script th:src="@{/assets/js/custom/users/user_form.js}"></script>
+        <script th:src="@{/assets/js/custom/users/user_form.js}"></script>
         
     </body>
 </html>
