@@ -191,7 +191,7 @@
     
                     <!-- LOGO -->
                     <div class="logo-box">
-                        <a href="index.html" class="logo logo-light text-center">
+                        <a th:href="@{/}" class="logo logo-light text-center">
                             <span class="logo-sm">
                                 <img src="assets/images/logo-sm.png" alt="" height="22">
                             </span>
@@ -199,7 +199,7 @@
                                 <img src="assets/images/logo-light.png" alt="" height="16">
                             </span>
                         </a>
-                        <a href="index.html" class="logo logo-dark text-center">
+                        <a th:href="@{/}" class="logo logo-dark text-center">
                             <span class="logo-sm">
                                 <img src="assets/images/logo-sm.png" alt="" height="22">
                             </span>
@@ -254,7 +254,7 @@
                                     <div class="dropdown-menu" aria-labelledby="topnav-apps">
 
                                         <a th:href="@{/users}" class="dropdown-item">List User</a>
-                                        <a href="apps-chat.html" class="dropdown-item">Create New User</a>
+                                        <a th:href="@{/users/new}" class="dropdown-item">Create New User</a>
                                         
                                     </div>
                                 </li>

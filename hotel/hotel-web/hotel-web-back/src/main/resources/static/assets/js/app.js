@@ -855,7 +855,7 @@ File: Main Js File
     }(window.jQuery);
 
 // Waves Effect
-Waves.init();
+//Waves.init();
 
 // Feather Icons
 feather.replace()

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
-        <title>Create User</title>
+        <title>[[${pageTitle}]]</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -16,7 +16,9 @@
 
 		<!-- icons -->
 		<link th:href="@{/assets/css/icons.min.css}" rel="stylesheet" type="text/css" />
-
+		 <!-- Vendor -->
+        <script th:src="@{/assets/libs/jquery/jquery.min.js}"></script>
+        <script th:src="@{/assets/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
     </head>
 
     <!-- body start -->
@@ -374,7 +376,7 @@
                                     <span> Email </span>
                                     <span class="menu-arrow"></span>
                                 </a>
-                                <div class="collapse" id="email">
+                                <div class="collapse" id="email12">
                                     <ul class="nav-second-level">
                                         <li>
                                             <a href="email-inbox.html">Inbox</a>
@@ -842,17 +844,15 @@
                             <div class="col-lg-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="header-title">Horizontal Form</h4>
-                                        <p class="text-muted font-14">
-                                            Parsley is a javascript form validation library. It helps you provide your users with feedback on their form submission before sending it to your server.
-                                        </p>
-										
-                                        <form th:action="@{/users/save}" method="post" role="form" th:object="${user}" class="parsley-examples"
+                                        <h4 class="header-title">[[${pageTitle}]]</h4>
+										<!---->
+                                        <form th:action="@{/users/save}" method="POST" role="form" th:object="${user}" class="parsley-examples"
                                         		onsubmit="return checkEmailUnique(this);" >
+                                        	<input type="hidden" th:field="*{id}"/>
                                             <div class="row mb-3">
-                                                <label for="inputEmail3" class="col-4 col-form-label">Email<span class="text-danger">*</span></label>
+                                                <label class="col-4 col-form-label">Email<span class="text-danger">*</span></label>
                                                 <div class="col-7">
-                                                    <input type="email" th:field="*{email}" required parsley-type="email" class="form-control" id="inputEmail3" placeholder="Email" />
+                                                    <input type="email" th:field="*{email}" required class="form-control" placeholder="Email" />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -867,18 +867,37 @@
                                                     <input required th:field="*{lastName}" class="form-control" id="validationCustom02" placeholder="Last name" />
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
-                                                <label for="hori-pass1" class="col-4 col-form-label">Password<span class="text-danger">*</span></label>
-                                                <div class="col-7">
-                                                    <input id="hori-pass1" th:field="*{password}" type="password" placeholder="Password" required class="form-control" />
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <label for="hori-pass2" class="col-4 col-form-label">Confirm Password <span class="text-danger">*</span></label>
-                                                <div class="col-7">
-                                                    <input data-parsley-equalto="#hori-pass1" type="password" required placeholder="Password" class="form-control" id="hori-pass2" />
-                                                </div>
-                                            </div>
+                                            
+                                            <th:block th:if="${user.id} == null">
+                                            	<div class="row mb-3">
+	                                                <label for="hori-pass1" class="col-4 col-form-label">Password<span class="text-danger">*</span></label>
+	                                                <div class="col-7">
+	                                                    <input id="hori-pass1" th:field="*{password}" type="password" placeholder="Password" required class="form-control" />
+	                                                </div>
+	                                            </div>
+	                                            <div class="row mb-3">
+	                                                <label for="hori-pass2" class="col-4 col-form-label">Confirm Password <span class="text-danger">*</span></label>
+	                                                <div class="col-7">
+	                                                    <input data-parsley-equalto="#hori-pass1" type="password" required placeholder="Password" class="form-control" id="hori-pass2" />
+	                                                </div>
+	                                            </div>
+                                            </th:block>
+                                            
+                                            <th:block th:if="${user.id} != null">
+                                            	<div class="row mb-3">
+	                                                <label for="hori-pass1" class="col-4 col-form-label">Password<span class="text-danger">*</span></label>
+	                                                <div class="col-7">
+	                                                    <input id="hori-pass1" th:field="*{password}" type="password" placeholder="Password" class="form-control" />
+	                                                </div>
+	                                            </div>
+	                                            <div class="row mb-3">
+	                                                <label for="hori-pass2" class="col-4 col-form-label">Confirm Password <span class="text-danger">*</span></label>
+	                                                <div class="col-7">
+	                                                    <input data-parsley-equalto="#hori-pass1" type="password" placeholder="Password" class="form-control" id="hori-pass2" />
+	                                                </div>
+	                                            </div>
+                                            </th:block>
+                                            
                                         	<div class="row mb-3">
                                                 <label for="inputEmail3" class="col-4 col-form-label">Roles<span class="text-danger">*</span></label>
                                                 <div class="col-7">
@@ -911,7 +930,19 @@
                             </div> <!-- end col -->
                         </div>
                         <!-- end row -->
-
+						<div class="modal fade text-center" id="modalDialog">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title" id="modalTitle">Warning</h4>
+								</div>
+								
+								<div class="modal-body">
+									<span id="modalBody"></span>
+								</div>
+							</div>
+						</div>
+					</div>
                     </div> <!-- container -->
 
                 </div> <!-- content -->
@@ -1084,31 +1115,64 @@
                 </div>
 
             </div> <!-- end slimscroll-menu-->
+            
+            
+            
         </div>
         <!-- /Right-bar -->
-
+        
         <!-- Right bar overlay-->
         <div class="rightbar-overlay"></div>
 
-        <!-- Vendor -->
-        <script th:src="@{/assets/libs/jquery/jquery.min.js}"></script>
-        <script th:src="@{/assets/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
-        <!--<script th:src="@{/assets/libs/simplebar/simplebar.min.js}"></script>
-        <script th:src="@{/assets/libs/node-waves/waves.min.js}"></script>
-        <script th:src="@{/assets/libs/waypoints/lib/jquery.waypoints.min.js}"></script>-->
-        <script th:src="@{/assets/libs/jquery.counterup/jquery.counterup.min.js}"></script>
-        <!--<script th:src="@{/assets/libs/feather-icons/feather.min.js}"></script>-->
 
-        <!-- Plugin js-->
-        <!--<script th:src="@{/assets/libs/parsleyjs/parsley.min.js}"></script>-->
-
-        <!-- Validation init js-->
-       <!-- <script th:src="@{/assets/js/pages/form-validation.init.js}"></script>-->
-
+       
         <!-- App js -->
         <script th:src="@{/assets/js/app.min.js}"></script>
         
-        <script th:src="@{/assets/js/custom/users/user_form.js}"></script>
         
-    </body>
+<script type="text/javascript">
+		$(document).ready(function() {
+				$("#buttonCancel").on("click", function() {
+					window.location = "[[@{/users}]]";
+				});
+				
+				
+		});
+		
+		function checkEmailUnique(form) {
+				url = "[[@{/users/check_email}]]";
+				userEmail = $("#email").val();		console.log(userEmail);
+				userId = $("#id").val();
+				csrfValue = $("input[name='_csrf']").val();
+				params = {id: userId, email: userEmail, _csrf: csrfValue};
+				
+				$.post(url, params, function(response) {
+					if (response == "OK") {
+						form.submit();
+					} else if (response == "Duplicated") {
+						showModalDialog("Warning", "There is another user having the email " + userEmail);
+					} else {
+						showModalDialog("Error", "Unknown response from server");
+					}
+				}).fail(function() {
+					showModalDialog("Error", "Could not connect to the server");
+				});
+				
+				return false;
+			};
+			
+			
+		function showModalDialog(title, message) {
+			console.log(title + " " + message);
+			$("#modalTitle").text(title);
+			$("#modalBody").text(message);
+			// $("#modalDialog").show();
+			
+			var myModal = new bootstrap.Modal(document.getElementById("modalDialog"), {});
+			myModal.show();
+		};
+</script>
+        
+        <script th:src="@{/assets/js/custom/users/user_form.js}"></script>
+</body>
 </html>
